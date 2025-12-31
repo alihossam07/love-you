@@ -17,7 +17,7 @@ html, body {
 }
 @keyframes bgAnim {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
 
-.flower, .sparkle, .floating-heart, .floating-love {
+.flower, .sparkle, .floating-heart, .floating-love, .emoji-bg {
   position: absolute; user-select:none;
 }
 .flower {border-radius:50%; opacity:0.7; animation: floatFlower 25s linear infinite;}
@@ -28,6 +28,8 @@ html, body {
 .floating-love {font-size:22px;color:#ff4d6d;font-weight:bold;animation: floatLove 5s linear forwards;text-shadow:1px 1px 2px black;}
 @keyframes floatUp {0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-800px) scale(1.5);opacity:0;}}
 @keyframes floatLove {0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-900px) scale(1.2);opacity:0;}}
+.emoji-bg {font-size:25px; animation: floatEmoji 6s linear infinite; opacity:0.8;}
+@keyframes floatEmoji {0%{transform:translateY(0) rotate(0deg);}100%{transform:translateY(-800px) rotate(360deg);}}
 
 #login {
   display:flex; flex-direction:column; justify-content:center; align-items:center;
@@ -37,11 +39,12 @@ html, body {
 #login p#newyear { font-size:24px; margin:5px; text-shadow:2px 2px 4px black; }
 #login input { padding: 14px 25px; font-size:22px; border-radius:50px; border:none; width:220px; text-align:center; outline:none; text-shadow:2px 2px 4px black;}
 #login button { margin-top:10px; padding:14px 25px; font-size:22px; border-radius:50px; border:none; background:#ff7aa3; color:white; cursor:pointer;}
-#login .top-icons { font-size:60px; margin-bottom:10px; }
+#login .top-icons { font-size:60px; margin-bottom:10px; display:flex; gap:10px; align-items:center; justify-content:center; }
 
 #content { display:none; padding:20px; position:relative; z-index:1; }
-#content h2 { font-size:26px; margin-bottom:5px; text-shadow:2px 2px 4px black; }
-#message { max-width:700px; margin:auto; font-size:22px; line-height:2; white-space: pre-wrap; text-shadow:2px 2px 4px black; }
+#content h2 { font-size:26px; margin-bottom:5px; text-shadow:2px 2px 4px black; display:flex; justify-content:center; align-items:center; gap:10px; }
+#content #loveHeader { font-size:30px; text-shadow:2px 2px 4px black; margin-bottom:10px; }
+#message { max-width:700px; margin:auto; font-size:22px; line-height:2; white-space: pre-wrap; text-shadow:2px 2px 4px black; opacity:0; transition:opacity 0.1s; position:relative; z-index:2; }
 
 .slider { width:90%; max-width:400px; margin:20px auto; position:relative; perspective:1000px;}
 .slider img, .slider video { width:100%; display:none; border-radius:20px; box-shadow:0 5px 15px rgba(0,0,0,0.5);}
@@ -64,7 +67,7 @@ html, body {
     <div>🎄</div>
     <div class="heart">❤️</div>
   </div>
-  <h2>بحبك يا لوزه 💘</h2>
+  <h2>بحبك يا لوزه ❤️❤️</h2>
   <p id="newyear">كل سنة وانتي معايا ❤️‍🩹</p>
   <input type="password" id="pass" placeholder="Enter password">
   <button id="loginBtn">Login</button>
@@ -72,7 +75,8 @@ html, body {
 </div>
 
 <div id="content">
-  <h2>سنه جديده وانتي معايا وكل سنه واحنا مع بعض💘♾️</h2>
+  <h2 id="loveHeader">بحبك يا لوزه ❤️❤️</h2>
+  <h2>سنه جديده وانتي معايا وكل سنه واحنا مع بعض💘♾️ <span class="heart">❤️</span> 🎄</h2>
   <h1>ذكريات متتنسيش 💖</h1>
   <div id="message"></div>
   <button id="enterBook" style="display:none; margin-top:20px; padding:10px 20px; font-size:22px; border-radius:20px; background:#ff7aa3; color:white; border:none; cursor:pointer;">افتح الكتاب</button>
@@ -109,34 +113,41 @@ html, body {
 </div>
 
 <script>
+// Password & login
 document.getElementById("loginBtn").addEventListener("click", function(){
   let pass = document.getElementById("pass").value.trim();
   if(pass==="9/6/2025"){
     document.getElementById("login").style.display="none";
     document.getElementById("content").style.display="block";
     typeMessage();
+    createEmojiBackground();
   } else { alert("Password is incorrect"); }
 });
 
+// Typing message with fade
 const text=`هلا اي يعمري عامله اي بما ان طبعا مش هعرف اجيبلك حاجه عشان العيله الكريمه ف يعني دي اقل حاجه اقدر اقدمهالك.  ونخش ع الي بعدهه تعالي كدا نشوف!!؟ 
 المهم يعمري  بصي ينونو خليكي عارفه اني بحبك وبموت فيكي وخليكي عارفه ان كل حاجه جت بسرعه  الماسدج دي ومعرفتش اطلع فيها كل حاجه بصراحه بس كل الي اقدر اقولهولك اني بحبك وبعشقك وبموت فيكي خليكي عارفه اني قد وعدي وبحبك ومش عايز غيرك خليكي عارفه انك احن واحلا واجمل واغلا الناس عندي وبالعكس دا انت مش اي ناس اصلا حبيت اوريكي كدا وافكرك بشويه حاجات قدييييمه ذكريات  حلوه وجميله وايام متتعوضش بصراحه اتمنا انها ترجع بحبها ونفسي ارجع اعيشها تاني(انتظري مني انستا هبعتلك الماسدج الي انا عايزها بجد) بحبك امواااههههه💋💋💋`;
 let i=0;
 function typeMessage(){
+  const msgDiv = document.getElementById("message");
   if(i<text.length){
-    document.getElementById("message").innerHTML+=text.charAt(i);
+    msgDiv.innerHTML+=text.charAt(i);
+    msgDiv.style.opacity = 1;
     i++;
-    setTimeout(typeMessage,30);
+    setTimeout(typeMessage,20);
   } else {
     document.getElementById("enterBook").style.display="inline-block";
   }
 }
 
+// Open book / slider
 document.getElementById("enterBook").onclick = function(){
   document.getElementById("slider").style.display="block";
   this.style.display="none";
   document.getElementById("videolink").style.display="block";
 }
 
+// Slider functions
 let index=0;
 const imgs=document.querySelectorAll(".slider img, .slider video");
 function show(){ imgs.forEach(img=>img.classList.remove("active")); imgs[index].classList.add("active"); triggerEffects(); playVideoIfLast();}
@@ -144,6 +155,7 @@ function next(){ index=(index+1)%imgs.length; show();}
 function prev(){ index=(index-1+imgs.length)%imgs.length; show();}
 function playVideoIfLast(){ const current=imgs[index]; if(current.tagName==="VIDEO"){ current.play();} }
 
+// Floating hearts
 function createHeart(){
   const heart=document.createElement("div");
   heart.className="floating-heart";
@@ -154,6 +166,7 @@ function createHeart(){
   setTimeout(()=>heart.remove(),5000);
 }
 
+// Floating words
 function createWord(){
   const words=["love","love you","forever","بحبك","بعشقك","وبموت فيكي"];
   const word=document.createElement("div");
@@ -165,6 +178,7 @@ function createWord(){
   setTimeout(()=>word.remove(),5000);
 }
 
+// Sparkles
 function createSparkle(){
   const s=document.createElement("div");
   s.className="sparkle";
@@ -176,6 +190,7 @@ function createSparkle(){
   setTimeout(()=>s.remove(),4000);
 }
 
+// Flowers
 for(let j=0;j<25;j++){
   const f=document.createElement("div");
   f.className="flower";
@@ -187,8 +202,25 @@ for(let j=0;j<25;j++){
   document.getElementById("flowersContainer").appendChild(f);
 }
 
+// Trigger effects
 function triggerEffects(){ createHeart(); createWord(); createSparkle(); }
 setInterval(()=>{createHeart(); createWord(); createSparkle();},400);
+
+// Emoji background around message
+function createEmojiBackground(){
+  const emojis = ["🎄","❤️","🩷","💘","💖","♾️","✨","💓","🎅","👸🏻","☃️","❄️","🌨️"];
+  for(let i=0;i<50;i++){
+    const e = document.createElement("div");
+    e.className="emoji-bg";
+    e.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+    e.style.left=Math.random()*window.innerWidth+"px";
+    e.style.top=Math.random()*window.innerHeight+"px";
+    e.style.fontSize=(15+Math.random()*20)+"px";
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(),8000);
+  }
+  setInterval(createEmojiBackground,1000);
+}
 </script>
 </body>
 </html>
