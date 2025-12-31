@@ -40,6 +40,7 @@ html, body {
 #login .top-icons { font-size:60px; margin-bottom:10px; }
 
 #content { display:none; padding:20px; position:relative; z-index:1; }
+#content h2 { font-size:26px; margin-bottom:5px; text-shadow:2px 2px 4px black; }
 #message { max-width:700px; margin:auto; font-size:22px; line-height:2; white-space: pre-wrap; text-shadow:2px 2px 4px black; }
 
 .slider { width:90%; max-width:400px; margin:20px auto; position:relative; perspective:1000px;}
@@ -71,6 +72,7 @@ html, body {
 </div>
 
 <div id="content">
+  <h2>سنه جديده وانتي معايا وكل سنه واحنا مع بعض💘♾️</h2>
   <h1>ذكريات متتنسيش 💖</h1>
   <div id="message"></div>
   <button id="enterBook" style="display:none; margin-top:20px; padding:10px 20px; font-size:22px; border-radius:20px; background:#ff7aa3; color:white; border:none; cursor:pointer;">افتح الكتاب</button>
@@ -102,12 +104,11 @@ html, body {
   </div>
 
   <p id="videolink" style="font-size:20px; color:#ff4d6d; text-shadow:1px 1px 2px black; display:none;">
-    الحته ديه ليكي 💘♾️ : <a href="https://vt.tiktok.com/ZS56vQMBV/" target="_blank" style="color:#fff; text-decoration:underline;">اضغطي هنا لتشغيل الأغنية</a>
+    <a href="https://vt.tiktok.com/ZS56vQMBV/" target="_blank" style="color:#fff; text-decoration:underline;">الحته ديه ليكي💖💘</a>
   </p>
 </div>
 
 <script>
-// Password & message
 document.getElementById("loginBtn").addEventListener("click", function(){
   let pass = document.getElementById("pass").value.trim();
   if(pass==="9/6/2025"){
@@ -117,7 +118,6 @@ document.getElementById("loginBtn").addEventListener("click", function(){
   } else { alert("Password is incorrect"); }
 });
 
-// Typing message
 const text=`هلا اي يعمري عامله اي بما ان طبعا مش هعرف اجيبلك حاجه عشان العيله الكريمه ف يعني دي اقل حاجه اقدر اقدمهالك.  ونخش ع الي بعدهه تعالي كدا نشوف!!؟ 
 المهم يعمري  بصي ينونو خليكي عارفه اني بحبك وبموت فيكي وخليكي عارفه ان كل حاجه جت بسرعه  الماسدج دي ومعرفتش اطلع فيها كل حاجه بصراحه بس كل الي اقدر اقولهولك اني بحبك وبعشقك وبموت فيكي خليكي عارفه اني قد وعدي وبحبك ومش عايز غيرك خليكي عارفه انك احن واحلا واجمل واغلا الناس عندي وبالعكس دا انت مش اي ناس اصلا حبيت اوريكي كدا وافكرك بشويه حاجات قدييييمه ذكريات  حلوه وجميله وايام متتعوضش بصراحه اتمنا انها ترجع بحبها ونفسي ارجع اعيشها تاني(انتظري مني انستا هبعتلك الماسدج الي انا عايزها بجد) بحبك امواااههههه💋💋💋`;
 let i=0;
@@ -131,14 +131,12 @@ function typeMessage(){
   }
 }
 
-// Enter book
 document.getElementById("enterBook").onclick = function(){
   document.getElementById("slider").style.display="block";
   this.style.display="none";
   document.getElementById("videolink").style.display="block";
 }
 
-// Slider
 let index=0;
 const imgs=document.querySelectorAll(".slider img, .slider video");
 function show(){ imgs.forEach(img=>img.classList.remove("active")); imgs[index].classList.add("active"); triggerEffects(); playVideoIfLast();}
@@ -146,7 +144,6 @@ function next(){ index=(index+1)%imgs.length; show();}
 function prev(){ index=(index-1+imgs.length)%imgs.length; show();}
 function playVideoIfLast(){ const current=imgs[index]; if(current.tagName==="VIDEO"){ current.play();} }
 
-// Floating hearts
 function createHeart(){
   const heart=document.createElement("div");
   heart.className="floating-heart";
@@ -157,7 +154,6 @@ function createHeart(){
   setTimeout(()=>heart.remove(),5000);
 }
 
-// Floating words
 function createWord(){
   const words=["love","love you","forever","بحبك","بعشقك","وبموت فيكي"];
   const word=document.createElement("div");
@@ -169,7 +165,6 @@ function createWord(){
   setTimeout(()=>word.remove(),5000);
 }
 
-// Sparkles
 function createSparkle(){
   const s=document.createElement("div");
   s.className="sparkle";
@@ -181,7 +176,6 @@ function createSparkle(){
   setTimeout(()=>s.remove(),4000);
 }
 
-// Flowers
 for(let j=0;j<25;j++){
   const f=document.createElement("div");
   f.className="flower";
@@ -193,10 +187,7 @@ for(let j=0;j<25;j++){
   document.getElementById("flowersContainer").appendChild(f);
 }
 
-// Trigger on page flip
 function triggerEffects(){ createHeart(); createWord(); createSparkle(); }
-
-// Initial floating effects
 setInterval(()=>{createHeart(); createWord(); createSparkle();},400);
 </script>
 </body>
