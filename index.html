@@ -4,168 +4,85 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>بحبك يا لوزه</title>
-
 <style>
-html,body{
-  margin:0;
-  padding:0;
-  font-family:'Arial Black',Arial;
-  color:white;
-  text-align:center;
-  background:linear-gradient(135deg,#8b0000,#ff0000);
-  border:8px solid white;
-  overflow-x:hidden;
+html, body {
+  margin: 0; padding: 0;
+  font-family: 'Arial Black', Arial, sans-serif;
+  text-align: center; color: white;
+  overflow-y: auto;
+  background: linear-gradient(135deg, #ff0000, #990000);
+  border: 5px solid white;
+  background-size: 400% 400%;
+  animation: bgAnim 30s ease infinite;
 }
+@keyframes bgAnim {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
 
-/* قلب نابض */
-.heart{
-  font-size:70px;
-  animation:beat 1s infinite;
+/* Flowers, sparkles, hearts */
+.flower, .sparkle, .floating-heart, .floating-love {
+  position: absolute; user-select:none;
 }
-@keyframes beat{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.3)}
-  100%{transform:scale(1)}
-}
+.flower {border-radius:50%; opacity:0.7; animation: floatFlower 25s linear infinite;}
+@keyframes floatFlower {0%{transform:translateY(0) rotate(0deg);}100%{transform:translateY(-900px) rotate(360deg);}}
+.sparkle {width:3px; height:3px; background:white; border-radius:50%; opacity:0.8; animation: floatSparkle 4s linear infinite;}
+@keyframes floatSparkle {0%{transform:translate(0,0) scale(1);opacity:1;}100%{transform:translate(-100px,-800px) scale(1.5);opacity:0;}}
+.floating-heart {font-size:20px;color:#ff6a95;animation: floatUp 5s linear infinite;}
+.floating-love {font-size:22px;color:#ff4d6d;font-weight:bold;animation: floatLove 5s linear forwards;text-shadow:1px 1px 2px black;}
+@keyframes floatUp {0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-800px) scale(1.5);opacity:0;}}
+@keyframes floatLove {0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-900px) scale(1.2);opacity:0;}}
 
-/* شاشة تسجيل */
-#login{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+/* Login */
+#login {
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  padding:50px 0; position:relative;
 }
-#login input{
-  padding:15px;
-  border-radius:30px;
-  border:none;
-  font-size:20px;
-  text-align:center;
-}
-#login button{
-  margin-top:10px;
-  padding:12px 30px;
-  border:none;
-  border-radius:30px;
-  font-size:20px;
-  background:#ff6a95;
-  color:white;
-}
+#login h2 { font-size:32px; text-shadow:2px 2px 4px black; margin-bottom:5px; }
+#login p#newyear { font-size:24px; margin:5px; text-shadow:2px 2px 4px black; }
+#login input { padding: 14px 25px; font-size:22px; border-radius:50px; border:none; width:220px; text-align:center; outline:none; text-shadow:2px 2px 4px black;}
+#login button { margin-top:10px; padding:14px 25px; font-size:22px; border-radius:50px; border:none; background:#ff7aa3; color:white; cursor:pointer;}
+#login .top-icons { font-size:60px; margin-bottom:10px; }
 
-/* الصفحات */
-.page{display:none;min-height:100vh;padding:20px}
-.page.active{display:block}
+/* Content */
+#content { display:none; padding:20px; position:relative; z-index:1; }
+#message { max-width:700px; margin:auto; font-size:22px; line-height:2; white-space: pre-wrap; text-shadow:2px 2px 4px black; }
 
-/* الرسالة */
-#message{
-  max-width:700px;
-  margin:20px auto;
-  font-size:22px;
-  line-height:2;
-  text-shadow:2px 2px 4px black;
-  white-space:pre-wrap;
-}
+/* Slider / Book */
+.slider { width:90%; max-width:400px; margin:20px auto; position:relative; perspective:1000px;}
+.slider img, .slider video { width:100%; display:none; border-radius:20px; box-shadow:0 5px 15px rgba(0,0,0,0.5);}
+.slider img.active, .slider video.active { display:block; transform-style:preserve-3d; transition: transform 0.8s;}
+.slider button { position:absolute; top:50%; transform:translateY(-50%); padding:10px 15px; font-size:24px; background: rgba(0,0,0,0.4); color:white; border:none; border-radius:10px; cursor:pointer;}
+.slider #prev { left:0; } .slider #next { right:0; }
 
-/* زر */
-.btn{
-  margin:30px auto;
-  padding:15px 40px;
-  font-size:22px;
-  border:none;
-  border-radius:40px;
-  background:#ff6a95;
-  color:white;
-}
-
-/* كتاب الصور */
-.book{
-  max-width:360px;
-  margin:20px auto;
-  position:relative;
-}
-.book img,.book video{
-  width:100%;
-  display:none;
-  border-radius:15px;
-  box-shadow:0 10px 25px rgba(0,0,0,.6);
-}
-.book .active{display:block}
-
-/* أزرار تقليب */
-.nav{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:30px;
-  background:rgba(0,0,0,.4);
-  color:white;
-  padding:10px;
-  border-radius:10px;
-}
-#prev{left:0}
-#next{right:0}
-
-/* قلوب وكلمات وبريق */
-.floating-heart,.floating-word,.sparkle{
-  position:fixed;
-  user-select:none;
-}
-.floating-heart{
-  font-size:20px;
-  animation:floatUp 5s linear forwards;
-}
-.floating-word{
-  font-size:22px;
-  font-weight:bold;
-  animation:floatUp 6s linear forwards;
-}
-.sparkle{
-  width:3px;height:3px;
-  background:white;
-  animation:spark 4s linear forwards;
-}
-@keyframes floatUp{
-  from{transform:translateY(0);opacity:1}
-  to{transform:translateY(-900px);opacity:0}
-}
-@keyframes spark{
-  to{transform:translate(-100px,-800px);opacity:0}
-}
+/* Heart animation */
+.heart { font-size:60px; animation: beat 1s infinite; color:#ff6a95; text-shadow:0 0 10px #ff6a95,0 0 20px #ffc0d0;}
+@keyframes beat {0%{transform:scale(1);}25%{transform:scale(1.2);}50%{transform:scale(1.5);}75%{transform:scale(1.2);}100%{transform:scale(1);}}
 </style>
 </head>
-
 <body>
+<div id="flowersContainer"></div>
+<div id="heartsContainer"></div>
+<div id="wordsContainer"></div>
+<div id="sparklesContainer"></div>
 
-<!-- تسجيل -->
 <div id="login">
-  <div style="font-size:60px">🎄</div>
-  <div class="heart">❤️</div>
-  <h2>سنة جديدة وانتي معايا</h2>
-  <p>happy new year 🎄❤️‍🩹</p>
-  <input type="password" id="pass" placeholder="Password">
-  <button onclick="login()">دخول</button>
-  <p>أقل حاجه أقدمها ليكي ❤️‍🩹</p>
+  <div class="top-icons">
+    <div>🎄</div>
+    <div class="heart">❤️</div>
+  </div>
+  <h2>بحبك يا لوزه 💘</h2>
+  <p id="newyear">كل سنة وانتي معايا ❤️‍🩹</p>
+  <input type="password" id="pass" placeholder="Enter password">
+  <button onclick="check()">Login</button>
+  <p style="position:absolute; top:10px; left:10px; font-size:16px; color:white;">أقل حاجه أقدمه ليكي ❤️‍🩹</p>
 </div>
 
-<!-- صفحة الرسالة -->
-<div id="page1" class="page">
-  <div class="heart">❤️</div>
-  <div style="font-size:50px">🎄</div>
-  <h1>بحبك يا لوزه💘</h1>
-  <h3>كل سنة وانتي معايا❤️‍🩹</h3>
+<div id="content">
+  <h1>ذكريات متتنسيش 💖</h1>
   <div id="message"></div>
-  <button id="goBook" class="btn" style="display:none" onclick="openBook()">كملي ❤️</button>
-</div>
+  <button id="enterBook" style="display:none; margin-top:20px; padding:10px 20px; font-size:22px; border-radius:20px; background:#ff7aa3; color:white; border:none; cursor:pointer;">افتح الكتاب</button>
 
-<!-- صفحة الذكريات -->
-<div id="page2" class="page">
-  <h1>ذكريات متتنسيش💖</h1>
-
-  <div class="book">
-    <div id="prev" class="nav" onclick="prev()">❮</div>
-
-    <!-- 20 صورة -->
+  <div class="slider" id="slider" style="display:none;">
+    <button id="prev" onclick="prev()">❮</button>
+    <!-- 20 صور -->
     <img src="img/img1.jpg" class="active">
     <img src="img/img2.jpg">
     <img src="img/img3.jpg">
@@ -186,91 +103,108 @@ html,body{
     <img src="img/img18.jpg">
     <img src="img/img19.jpg">
     <img src="img/img20.jpg">
-
     <!-- فيديو -->
-    <video src="video/final.mp4"></video>
-
-    <div id="next" class="nav" onclick="next()">❯</div>
+    <video src="video/final.mp4" loop muted></video>
+    <button id="next" onclick="next()">❯</button>
   </div>
 
-  <p style="font-size:22px">
-    الحته ديه ليكي 💘♾️<br>
-    <a href="https://vt.tiktok.com/ZS56vQMBV/" target="_blank" style="color:white">
-      اضغطي هنا لتشغيل الأغنية
-    </a>
+  <p id="videolink" style="font-size:20px; color:#ff4d6d; text-shadow:1px 1px 2px black; display:none;">
+    الحته ديه ليكي 💘♾️ : <a href="https://vt.tiktok.com/ZS56vQMBV/" target="_blank" style="color:#fff; text-decoration:underline;">اضغطي هنا لتشغيل الأغنية</a>
   </p>
 </div>
 
 <script>
-/* تسجيل */
-function login(){
-  if(document.getElementById("pass").value==="9/6/2025"){
-    login.style.display="none";
-    page1.classList.add("active");
-    typeText();
-  }else alert("غلط");
+// Password & message
+function check(){
+  let pass = document.getElementById("pass").value.trim();
+  if(pass==="9/6/2025"){
+    document.getElementById("login").style.display="none";
+    document.getElementById("content").style.display="block";
+    typeMessage();
+  } else { alert("Password is incorrect"); }
 }
 
-/* كتابة الرسالة */
+// Typing message
 const text=`هلا اي يعمري عامله اي بما ان طبعا مش هعرف اجيبلك حاجه عشان العيله الكريمه ف يعني دي اقل حاجه اقدر اقدمهالك.  ونخش ع الي بعدهه تعالي كدا نشوف!!؟ 
 المهم يعمري  بصي ينونو خليكي عارفه اني بحبك وبموت فيكي وخليكي عارفه ان كل حاجه جت بسرعه  الماسدج دي ومعرفتش اطلع فيها كل حاجه بصراحه بس كل الي اقدر اقولهولك اني بحبك وبعشقك وبموت فيكي خليكي عارفه اني قد وعدي وبحبك ومش عايز غيرك خليكي عارفه انك احن واحلا واجمل واغلا الناس عندي وبالعكس دا انت مش اي ناس اصلا حبيت اوريكي كدا وافكرك بشويه حاجات قدييييمه ذكريات  حلوه وجميله وايام متتعوضش بصراحه اتمنا انها ترجع بحبها ونفسي ارجع اعيشها تاني(انتظري مني انستا هبعتلك الماسدج الي انا عايزها بجد) بحبك امواااههههه💋💋💋`;
 let i=0;
-function typeText(){
+function typeMessage(){
   if(i<text.length){
-    message.innerHTML+=text[i++];
-    setTimeout(typeText,30);
-  }else goBook.style.display="block";
+    document.getElementById("message").innerHTML+=text.charAt(i);
+    i++;
+    setTimeout(typeMessage,30);
+  } else {
+    document.getElementById("enterBook").style.display="inline-block";
+  }
 }
 
-/* انتقال */
-function openBook(){
-  page1.classList.remove("active");
-  page2.classList.add("active");
+// Enter book
+document.getElementById("enterBook").onclick = function(){
+  document.getElementById("slider").style.display="block";
+  this.style.display="none";
+  document.getElementById("videolink").style.display="block";
 }
 
-/* كتاب */
-let idx=0;
-const pages=document.querySelectorAll(".book img,.book video");
-function show(){
-  pages.forEach(p=>p.classList.remove("active"));
-  pages[idx].classList.add("active");
-  if(pages[idx].tagName==="VIDEO") pages[idx].play();
-}
-function next(){idx=(idx+1)%pages.length;show();spawn()}
-function prev(){idx=(idx-1+pages.length)%pages.length;show();spawn()}
+// Slider
+let index=0;
+const imgs=document.querySelectorAll(".slider img, .slider video");
+function show(){ imgs.forEach(img=>img.classList.remove("active")); imgs[index].classList.add("active"); triggerEffects(); playVideoIfLast();}
+function next(){ index=(index+1)%imgs.length; show();}
+function prev(){ index=(index-1+imgs.length)%imgs.length; show();}
+function playVideoIfLast(){ const current=imgs[index]; if(current.tagName==="VIDEO"){ current.play();} }
 
-/* تأثيرات */
-function spawn(){
-  heart();word();spark();
+// Floating hearts
+function createHeart(){
+  const heart=document.createElement("div");
+  heart.className="floating-heart";
+  heart.style.left=Math.random()*window.innerWidth+"px";
+  heart.style.fontSize=(10+Math.random()*20)+"px";
+  heart.innerText="❤️";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),5000);
 }
-setInterval(spawn,500);
 
-function heart(){
-  let h=document.createElement("div");
-  h.className="floating-heart";
-  h.innerText="❤️";
-  h.style.left=Math.random()*100+"%";
-  h.style.bottom="0";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),5000);
+// Floating words
+function createWord(){
+  const words=["love","love you","forever","بحبك","بعشقك","وبموت فيكي"];
+  const word=document.createElement("div");
+  word.className="floating-love";
+  word.innerText=words[Math.floor(Math.random()*words.length)];
+  word.style.left=Math.random()*window.innerWidth+"px";
+  word.style.top=window.innerHeight + "px";
+  document.body.appendChild(word);
+  setTimeout(()=>word.remove(),5000);
 }
-function word(){
-  let w=document.createElement("div");
-  w.className="floating-word";
-  w.innerText=["بحبك","بعشقك","وبموت فيكي","love you"][Math.random()*4|0];
-  w.style.left=Math.random()*100+"%";
-  w.style.bottom="0";
-  document.body.appendChild(w);
-  setTimeout(()=>w.remove(),6000);
-}
-function spark(){
-  let s=document.createElement("div");
+
+// Sparkles
+function createSparkle(){
+  const s=document.createElement("div");
   s.className="sparkle";
-  s.style.left=Math.random()*100+"%";
-  s.style.top=Math.random()*100+"%";
+  s.style.left=Math.random()*window.innerWidth+"px";
+  s.style.top=Math.random()*window.innerHeight+"px";
+  s.style.width=(2+Math.random()*3)+"px";
+  s.style.height=s.style.width;
   document.body.appendChild(s);
   setTimeout(()=>s.remove(),4000);
 }
+
+// Flowers
+for(let j=0;j<25;j++){
+  const f=document.createElement("div");
+  f.className="flower";
+  f.style.left=Math.random()*window.innerWidth+"px";
+  f.style.top=Math.random()*window.innerHeight+"px";
+  let size=5+Math.random()*10;
+  f.style.width=size+"px"; f.style.height=size+"px";
+  f.style.background="hsl("+Math.random()*360+",70%,85%)";
+  document.getElementById("flowersContainer").appendChild(f);
+}
+
+// Trigger on page flip
+function triggerEffects(){ createHeart(); createWord(); createSparkle(); }
+
+// Initial floating effects
+setInterval(()=>{createHeart(); createWord(); createSparkle();},400);
 </script>
 </body>
 </html>
