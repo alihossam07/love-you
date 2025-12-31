@@ -17,7 +17,6 @@ html, body {
 }
 @keyframes bgAnim {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
 
-/* Flowers, sparkles, hearts */
 .flower, .sparkle, .floating-heart, .floating-love {
   position: absolute; user-select:none;
 }
@@ -30,7 +29,6 @@ html, body {
 @keyframes floatUp {0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-800px) scale(1.5);opacity:0;}}
 @keyframes floatLove {0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-900px) scale(1.2);opacity:0;}}
 
-/* Login */
 #login {
   display:flex; flex-direction:column; justify-content:center; align-items:center;
   padding:50px 0; position:relative;
@@ -41,18 +39,15 @@ html, body {
 #login button { margin-top:10px; padding:14px 25px; font-size:22px; border-radius:50px; border:none; background:#ff7aa3; color:white; cursor:pointer;}
 #login .top-icons { font-size:60px; margin-bottom:10px; }
 
-/* Content */
 #content { display:none; padding:20px; position:relative; z-index:1; }
 #message { max-width:700px; margin:auto; font-size:22px; line-height:2; white-space: pre-wrap; text-shadow:2px 2px 4px black; }
 
-/* Slider / Book */
 .slider { width:90%; max-width:400px; margin:20px auto; position:relative; perspective:1000px;}
 .slider img, .slider video { width:100%; display:none; border-radius:20px; box-shadow:0 5px 15px rgba(0,0,0,0.5);}
 .slider img.active, .slider video.active { display:block; transform-style:preserve-3d; transition: transform 0.8s;}
 .slider button { position:absolute; top:50%; transform:translateY(-50%); padding:10px 15px; font-size:24px; background: rgba(0,0,0,0.4); color:white; border:none; border-radius:10px; cursor:pointer;}
 .slider #prev { left:0; } .slider #next { right:0; }
 
-/* Heart animation */
 .heart { font-size:60px; animation: beat 1s infinite; color:#ff6a95; text-shadow:0 0 10px #ff6a95,0 0 20px #ffc0d0;}
 @keyframes beat {0%{transform:scale(1);}25%{transform:scale(1.2);}50%{transform:scale(1.5);}75%{transform:scale(1.2);}100%{transform:scale(1);}}
 </style>
@@ -71,7 +66,7 @@ html, body {
   <h2>بحبك يا لوزه 💘</h2>
   <p id="newyear">كل سنة وانتي معايا ❤️‍🩹</p>
   <input type="password" id="pass" placeholder="Enter password">
-  <button onclick="check()">Login</button>
+  <button id="loginBtn">Login</button>
   <p style="position:absolute; top:10px; left:10px; font-size:16px; color:white;">أقل حاجه أقدمه ليكي ❤️‍🩹</p>
 </div>
 
@@ -82,7 +77,6 @@ html, body {
 
   <div class="slider" id="slider" style="display:none;">
     <button id="prev" onclick="prev()">❮</button>
-    <!-- 20 صور -->
     <img src="img/img1.jpg" class="active">
     <img src="img/img2.jpg">
     <img src="img/img3.jpg">
@@ -103,7 +97,6 @@ html, body {
     <img src="img/img18.jpg">
     <img src="img/img19.jpg">
     <img src="img/img20.jpg">
-    <!-- فيديو -->
     <video src="video/final.mp4" loop muted></video>
     <button id="next" onclick="next()">❯</button>
   </div>
@@ -115,14 +108,14 @@ html, body {
 
 <script>
 // Password & message
-function check(){
+document.getElementById("loginBtn").addEventListener("click", function(){
   let pass = document.getElementById("pass").value.trim();
   if(pass==="9/6/2025"){
     document.getElementById("login").style.display="none";
     document.getElementById("content").style.display="block";
     typeMessage();
   } else { alert("Password is incorrect"); }
-}
+});
 
 // Typing message
 const text=`هلا اي يعمري عامله اي بما ان طبعا مش هعرف اجيبلك حاجه عشان العيله الكريمه ف يعني دي اقل حاجه اقدر اقدمهالك.  ونخش ع الي بعدهه تعالي كدا نشوف!!؟ 
